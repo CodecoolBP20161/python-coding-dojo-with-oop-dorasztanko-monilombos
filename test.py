@@ -38,10 +38,12 @@ class ContactListTestCases(unittest.TestCase):
         supplier1 = Supplier("Supp Lier", "suplier@example.net")
         supplier1.order("CD Player")
         self.assertEqual(len(Supplier.all_orders.keys()), 1)
-        self.assertEqual(len(Supplier.all_orders[supplier1.email]), 1)
+        # e-mail was set to be key
+        self.assertEqual(len(Supplier.all_orders[supplier1.name]), 1)
         supplier1.order("DVD Player")
         self.assertEqual(len(Supplier.all_orders.keys()), 1)
-        self.assertEqual(len(Supplier.all_orders[supplier1.email]), 2)
+        # here too
+        self.assertEqual(len(Supplier.all_orders[supplier1.name]), 2)
 
     def test_contactlist_search(self):
         self.assertEqual(len(Contact.all_contacts.search('John')), 0)
@@ -49,6 +51,7 @@ class ContactListTestCases(unittest.TestCase):
         contact2 = Contact("Sandor Brody", "sandor.brody@example.net")
         contact3 = Contact("Elek Benedek", "elek.benedek@example.net")
         self.assertEqual(len(Contact.all_contacts.search('John')), 0)
+        # if contact IN self.name
         self.assertEqual(len(Contact.all_contacts.search('Benedek')), 1)
 
     def test_contactlist_longest_name(self):
